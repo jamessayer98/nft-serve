@@ -23,14 +23,14 @@ contract Gift is Governable("Contract Deployer") {
     mapping(address => mapping(uint256 => address)) allAvailableGifters;
     // All necessary events that the contract will emit to make sure that the off chain state is
     // kept in sync with the on chain state
-    event giftAdded(address gifter, address tokenToGift, uint256[] tokenId);
-    event giftRemoved(address gifter, address tokenToGift, uint256 tokenId);
+    event giftAdded(address indexed  gifter, address indexed tokenToGift, uint256[] tokenId);
+    event giftRemoved(address indexed  gifter, address indexed  tokenToGift, uint256 tokenId);
     event giftAccepted(
-        address gifter,
-        address gifted,
-        address TokenToGift,
-        uint256 tokenId,
-        uint256 acceptedON
+        address   gifter,
+        address indexed  gifted,
+        address indexed  TokenToGift,
+        uint256 indexed  tokenId,
+        uint256   acceptedON
     );
 
    function splitSignature(bytes memory sig)
