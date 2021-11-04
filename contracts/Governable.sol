@@ -1,7 +1,6 @@
 pragma solidity ^0.8.7;
 
 /// @title Governable Contract
-/// @author github.com/taaha827
 /// @notice gives any contract a list of governers
 contract Governable {
     constructor(string memory _Name) {
