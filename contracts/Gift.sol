@@ -244,7 +244,7 @@ contract Gift is Governable("Contract Deployer") {
             secretSignature
         );
         require(
-            isGoverner(originalSigner) == true,
+            isGovernor(originalSigner) == true,
             "Gift can only be accepted if signature is provided by an authorized LIT Node"
         );
         IERC721 tokenToTransferFrom = IERC721(tokenAddress);

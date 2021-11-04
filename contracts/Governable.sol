@@ -1,91 +1,91 @@
 pragma solidity ^0.8.7;
 
 /// @title Governable Contract
-/// @notice gives any contract a list of governers
+/// @notice gives any contract a list of governors
 contract Governable {
     constructor(string memory _Name) {
         address Owner = msg.sender;
-        Governers[Owner] = Governer({
+        Governors[Owner] = Governor({
             Name: _Name,
-            Governer_ID: Governer_ID_Seed
+            Governor_ID: Governor_ID_Seed
         });
-        GovernerAddresses.push(Owner);
+        GovernorAddresses.push(Owner);
 
-        emit GovernerAdded(Owner, Governer_ID_Seed, Owner);
-        Governer_ID_Seed += 1;
+        emit GovernorAdded(Owner, Governor_ID_Seed, Owner);
+        Governor_ID_Seed += 1;
     }
 
-    event GovernerAdded(
-        address indexed newGoverner,
-        uint256 Governer_ID,
+    event GovernorAdded(
+        address indexed newGovernor,
+        uint256 Governor_ID,
         address indexed Addedby
     );
 
-    uint256 private Governer_ID_Seed = 1;
-    address[] public GovernerAddresses;
+    uint256 private Governor_ID_Seed = 1;
+    address[] public GovernorAddresses;
 
-    struct Governer {
+    struct Governor {
         string Name;
-        uint256 Governer_ID;
+        uint256 Governor_ID;
     }
 
-    mapping(address => Governer) Governers;
+    mapping(address => Governor) Governors;
 
-    modifier onlyGoverner() {
+    modifier onlyGovernor() {
         require(
-            Governers[msg.sender].Governer_ID != 0,
-            "Governable : caller must be a member of the Governers"
+            Governors[msg.sender].Governor_ID != 0,
+            "Governable : caller must be a member of the Governors"
         );
         _;
     }
 
-    function getGoverners() public view returns (address[] memory) {
-        return GovernerAddresses;
+    function getGovernors() public view returns (address[] memory) {
+        return GovernorAddresses;
     }
 
-    function addGoverner(address _newGoverner, string memory _Name)
+    function addGovernor(address _newGovernor, string memory _Name)
         public
         payable
-        onlyGoverner
+        onlyGovernor
     {
         address Owner = msg.sender;
 
         require(
-            Governers[_newGoverner].Governer_ID != 0,
-            "governer already added"
+            Governors[_newGovernor].Governor_ID != 0,
+            "governor already added"
         );
 
-        Governers[_newGoverner] = Governer({
+        Governors[_newGovernor] = Governor({
             Name: _Name,
-            Governer_ID: Governer_ID_Seed
+            Governor_ID: Governor_ID_Seed
         });
-        GovernerAddresses.push(_newGoverner);
-        emit GovernerAdded(_newGoverner, Governer_ID_Seed, Owner);
-        Governer_ID_Seed += 1;
+        GovernorAddresses.push(_newGovernor);
+        emit GovernorAdded(_newGovernor, Governor_ID_Seed, Owner);
+        Governor_ID_Seed += 1;
     }
 
-    function removeGoverner(uint256 governorsIndexToDelete)
+    function removeGovernor(uint256 governorsIndexToDelete)
         public
         payable
-        onlyGoverner
+        onlyGovernor
     {
-        if (governorsIndexToDelete >= GovernerAddresses.length) return;
+        if (governorsIndexToDelete >= GovernorAddresses.length) return;
 
         for (
             uint256 i = governorsIndexToDelete;
-            i < GovernerAddresses.length - 1;
+            i < GovernorAddresses.length - 1;
             i++
         ) {
-            GovernerAddresses[i] = GovernerAddresses[i + 1];
+            GovernorAddresses[i] = GovernorAddresses[i + 1];
         }
-        GovernerAddresses[governorsIndexToDelete] = GovernerAddresses[
-            GovernerAddresses.length - 1
+        GovernorAddresses[governorsIndexToDelete] = GovernorAddresses[
+            GovernorAddresses.length - 1
         ];
-        GovernerAddresses.pop();
+        GovernorAddresses.pop();
     }
 
-    function isGoverner(address _addr) public view returns (bool) {
-        if (Governers[_addr].Governer_ID != 0) {
+    function isGovernor(address _addr) public view returns (bool) {
+        if (Governors[_addr].Governor_ID != 0) {
             return true;
         }
         return false;
