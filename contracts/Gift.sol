@@ -78,6 +78,7 @@ contract Gift is Governable("Contract Deployer") {
         uint256 indexed tokenId,
         uint256 acceptedON
     );
+
     // Helper Functions for verification of Signatures provided by Acceptor of gift
     function splitSignature(bytes memory sig)
         public
@@ -110,6 +111,7 @@ contract Gift is Governable("Contract Deployer") {
 
         // implicitly return (r, s, v)
     }
+
     function recoverSigner(
         bytes32 _ethSignedMessageHash,
         bytes memory _signature
@@ -118,6 +120,7 @@ contract Gift is Governable("Contract Deployer") {
 
         return ecrecover(_ethSignedMessageHash, v, r, s);
     }
+
     // All necessary functions that are required for this contract
     function addNFTToGift(
         address tokenAddressToGift,
@@ -145,11 +148,13 @@ contract Gift is Governable("Contract Deployer") {
                     isActive: true
                 });
                 allAvailableGifts[tokenAddressToGift][tokenIdToGift[i]] = true;
-                allAvailableGifters[tokenAddressToGift][tokenIdToGift[i]] = msg.sender;
+                allAvailableGifters[tokenAddressToGift][tokenIdToGift[i]] = msg
+                    .sender;
             }
         }
         emit giftAdded(msg.sender, tokenAddressToGift, tokenIdToGift);
     }
+
     function addNFTToGiftByRange(
         address tokenAddressToGift,
         uint256 tokenIdToGiftStart,
@@ -194,6 +199,7 @@ contract Gift is Governable("Contract Deployer") {
             tokenIdToGiftEnd
         );
     }
+
     function removeNFTFromGifts(uint256 tokenIdToRemove, address tokenAddress)
         public
     {
@@ -226,6 +232,7 @@ contract Gift is Governable("Contract Deployer") {
         .giftedTokensDetails[tokenAddress][tokenIdToRemove].hasGifted = true;
         emit giftRemoved(msg.sender, tokenAddress, tokenIdToRemove);
     }
+
     function acceptGift(
         uint256 tokenIdTo,
         address tokenAddress,
@@ -260,6 +267,7 @@ contract Gift is Governable("Contract Deployer") {
             block.timestamp
         );
     }
+
     // This function returns if the gift is available for gifting or not
     function NFTGiftStatus(uint256 tokenId, address tokenAddress)
         public

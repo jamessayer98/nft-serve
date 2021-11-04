@@ -65,17 +65,23 @@ contract Governable {
         Governer_ID_Seed += 1;
     }
 
-function removeGoverner(uint256 governorsIndexToDelete)
+    function removeGoverner(uint256 governorsIndexToDelete)
         public
         payable
         onlyGoverner
     {
         if (governorsIndexToDelete >= GovernerAddresses.length) return;
 
-        for (uint i = governorsIndexToDelete; i<GovernerAddresses.length-1; i++){
-            GovernerAddresses[i] = GovernerAddresses[i+1];
+        for (
+            uint256 i = governorsIndexToDelete;
+            i < GovernerAddresses.length - 1;
+            i++
+        ) {
+            GovernerAddresses[i] = GovernerAddresses[i + 1];
         }
-        GovernerAddresses[governorsIndexToDelete] = GovernerAddresses[GovernerAddresses.length - 1];
+        GovernerAddresses[governorsIndexToDelete] = GovernerAddresses[
+            GovernerAddresses.length - 1
+        ];
         GovernerAddresses.pop();
     }
 
